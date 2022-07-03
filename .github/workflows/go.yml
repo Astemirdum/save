@@ -34,9 +34,9 @@ jobs:
       - name: Run test
         run: go test -v  ./...
 
-      - name: Build
-        run: |
-          go build -v cmd/srv/main.go
-          go build -v cmd/client/main.go
+#      - name: Build
+#        run: |
+#          go build -v cmd/srv/main.go
+#          go build -v cmd/client/main.go
 
 
