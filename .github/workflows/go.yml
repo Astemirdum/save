@@ -1,0 +1,42 @@
+name: save
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses:  actions/checkout@v3
+
+      - name: Set Up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: 1.18
+
+      - name: Install dependencies
+        run: |
+          go version
+          go get -u golang.org/x/lint/golint
+
+      - name: Run vet & lint
+        run: |
+          go vet ./...
+
+      - name: Verify dependencies
+        run: go mod verify
+
+      - name: Run test
+        run: go test -v  ./...
+
+      - name: Build
+        run: |
+          go build -v cmd/srv/main.go
+          go build -v cmd/client/main.go
+
+
